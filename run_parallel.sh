@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # 설정 변수들
-EPS=0.12
-ERROR_RATE=0.02
-N_SAMPLES=1
+EPS=0.05
+ERROR_RATE=0.01
+N_SAMPLES=100
 DATA_DIR="RX_exp_sweep_1761111430"
 MAX_PARALLEL=8  # 동시에 실행할 최대 프로세스 수
 
 # 결과 저장 디렉토리 생성
-RESULTS_DIR="simulation_results"
+RESULTS_DIR="simulation_results_0.05_error_0.01"
 mkdir -p $RESULTS_DIR
 
 echo "Starting 2000 parallel simulations..."
@@ -43,7 +43,7 @@ run_batch() {
 }
 
 # 전체 작업 실행
-run_batch 1 2000
+run_batch 1 100
 
 echo "All simulations completed!"
 

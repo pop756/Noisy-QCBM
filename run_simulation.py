@@ -106,22 +106,14 @@ def main():
     # Generate samples
     print(f"Generating {args.n_samples} samples...")
     successful_samples = 0
-    
-    for sample_idx in tqdm(range(args.n_samples)):
-        try:
-            sample, dbg = sample_noisy_IQP_once_streaming_final(test_circuit, shots=1)
-            new_samples.append(sample)
-            successful_samples += 1
+    try:
+        sample, dbg = sample_noisy_IQP_once_streaming_final(test_circuit, shots=args.n_samples)
+        new_samples.append(sample)
+        successful_samples += 1
             
-            # Save results periodically (every 10 samples)
-            if (sample_idx + 1) % 10 == 0:
-                total_samples = safe_load_and_append(args.save_path, new_samples)
-                new_samples = []  # 저장 후 임시 리스트 초기화
-                print(f"Saved batch. Total samples in file: {total_samples}")
-                
-        except Exception as e:
-            print(f"Error during sampling {sample_idx}: {e}")
-    
+    except Exception as e:
+        print(f"Error during sampling : {e}")
+
     # Final save - 남은 샘플들 저장
     if new_samples:
         total_samples = safe_load_and_append(args.save_path, new_samples)
